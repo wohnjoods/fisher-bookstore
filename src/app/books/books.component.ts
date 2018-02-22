@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Book } from '../books/book'
-import { BOOKS } from '../books/mock-books-service'
+import { Component, OnInit, Input } from '@angular/core';
+import { IBook } from '../books/book'
+import { BooksService } from '../books/books.service'
 import { NgForOf } from '@angular/common/src/directives/ng_for_of';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -10,10 +11,21 @@ import { NgForOf } from '@angular/common/src/directives/ng_for_of';
 })
 export class BooksComponent implements OnInit {
  
-   books = BOOKS;
-  constructor() { }
+  books: IBook[] = [];
+  selectedBook: IBook;
+  constructor(private _booksService: BooksService) { }
 
   ngOnInit() {
+    this._booksService.getBooks()
+      .subscribe(books => {
+        this.books = books;
+      },
+        error => console.log(error)
+      );
+  }
+
+  onSelect(book: IBook): void {
+    this.selectedBook = book;
   }
 
 }

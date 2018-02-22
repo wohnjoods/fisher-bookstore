@@ -1,6 +1,10 @@
-<ul class = "books">
-  <li *ngFor = "let book of books">
-    <span class= "badge">{{book.id}}</span>
-    <span class = "text">{{book.title}}</span>
+<h2>Books</h2>
+
+<ul class="books">
+  <li *ngFor="let book of books" [class.selected]=
+  "book === selectedBook" (click)="onSelect(book)">
+    <span class="badge">{{book.id}}</span> {{book.title}}
   </li>
 </ul>
+
+<app-book-detail [book]='selectedBook'></app-book-detail>
